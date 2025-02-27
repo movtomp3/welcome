@@ -22,9 +22,9 @@
                     <span class="burger-icon"></span>
                 </button>
                 <div class="nav-links">
-                    <a href="#home" class="active">Home</a>
-                    <a href="#help">Help</a>
-                    <a href="#contact">Contact us</a>
+                    <a href="?page=home" class="active">Home</a>
+                    <a href="?page=help">Help</a>
+                    <a href="?page=contact">Contact us</a>
                 </div>
             </div>
             <button class="theme-toggle" aria-label="Toggle theme">
@@ -36,7 +36,7 @@
 
     <main>
         <!-- Home Page -->
-        <div id="home" class="page active">
+        <div data-page="home" class="page active">
             <div class="hero">
                 <h1>MOV to MP3 converter</h1>
                 <p class="subtitle">Effortless Conversion with Lightning Speed and Exceptional Quality.</p>
@@ -47,13 +47,13 @@
                     </a>
                 </div>
                 <div class="after-install">
-                    <a href="#welcome" class="welcome-link">See how to use the extension after installation</a>
+                    <a href="?page=welcome" class="welcome-link">See how to use the extension after installation</a>
                 </div>
             </div>
         </div>
 
         <!-- Welcome Page with Instructions -->
-        <div id="welcome" class="page">
+        <div data-page="welcome" class="page">
             <div class="hero">
                 <h1>⚡ Now you have a great way to convert MOV to MP3</h1>
             </div>
@@ -74,7 +74,7 @@
         </div>
 
         <!-- Help Page -->
-        <div id="help" class="page">
+        <div data-page="help" class="page">
             <div class="help-container">
                 <h1>Help Center</h1>
                 <div class="accordion">
@@ -122,7 +122,7 @@
         </div>
 
         <!-- Contact Page -->
-        <div id="contact" class="page">
+        <div data-page="contact" class="page">
             <div class="contact-container">
                 <h1>Contact Us</h1>
                 <div class="contact-info">
