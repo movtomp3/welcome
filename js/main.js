@@ -33,13 +33,13 @@ document.body.appendChild(noscriptYandex);
 function trackPageView(pageId) {
     // Yandex.Metrika virtual page view
     if (typeof ym !== 'undefined') {
-        ym(100067712, 'hit', '#' + pageId);
+        ym(100067712, 'hit', `?page=${pageId}`);
     }
     
     // Microsoft Clarity - mark navigation as a page view
     if (typeof clarity !== 'undefined') {
         clarity("set", "page_view", true);
-        clarity("set", "page_path", '#' + pageId);
+        clarity("set", "page_path", `?page=${pageId}`);
     }
 }
 
@@ -68,16 +68,21 @@ themeToggle.addEventListener('click', () => {
 
 // Page navigation
 function showPage(pageId) {
-    // Hide all pages
+    // First remove the active class from all pages
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
     });
-    // Show selected page
-    document.getElementById(pageId).classList.add('active');
+    
+    // Show the new page
+    const targetPage = document.querySelector(`[data-page="${pageId}"]`);
+    if (targetPage) {
+        targetPage.classList.add('active');
+    }
+    
     // Update active link
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + pageId) {
+        if (link.getAttribute('href') === `?page=${pageId}`) {
             link.classList.add('active');
         }
     });
@@ -90,21 +95,25 @@ function showPage(pageId) {
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
-        const pageId = link.getAttribute('href').substring(1);
+        const href = link.getAttribute('href');
+        const urlParams = new URLSearchParams(href);
+        const pageId = urlParams.get('page');
         showPage(pageId);
         // Update URL without page reload
-        history.pushState(null, '', link.getAttribute('href'));
+        history.pushState(null, '', href);
     });
 });
 
 // Handle browser back/forward buttons
 window.addEventListener('popstate', () => {
-    const pageId = location.hash.substring(1) || 'home';
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageId = urlParams.get('page') || 'home';
     showPage(pageId);
 });
 
-// Show initial page based on URL hash
-const initialPage = location.hash.substring(1) || 'home';
+// Show initial page based on URL params
+const urlParams = new URLSearchParams(window.location.search);
+const initialPage = urlParams.get('page') || 'home';
 showPage(initialPage);
 
 // Add click handler for welcome link
@@ -113,7 +122,7 @@ document.querySelector('.welcome-link').addEventListener('click', (e) => {
     const pageId = 'welcome';
     showPage(pageId);
     // Update URL without page reload
-    history.pushState(null, '', '#welcome');
+    history.pushState(null, '', '?page=welcome');
 });
 
 // Mobile menu toggle
